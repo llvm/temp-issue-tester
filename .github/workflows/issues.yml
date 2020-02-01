@@ -1,0 +1,13 @@
+name: Issue Updater
+
+on:
+  issues:
+    types:
+      - labeled
+
+jobs:
+  auto-subscribe:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Update watchers
+      uses: llvm/temp-issue-tester/update-watchers@master

@@ -1,0 +1,10 @@
+name: 'Update Watchers'
+description: 'Update watchers on an issue'
+inputs:
+  token:
+    required: false
+    default: ${{ secrets.GITHUB_TOKEN }}
+runs:
+  using: 'node12'
+  main: 'main.js'
+
