@@ -6,14 +6,14 @@ async function run() {
   const octokit = new github.GitHub(token);
 
   const issueID = github.context.issue.number;
+  const teamname = "@llvm/issue-subscribers-" + github.context.issue.label.replace(" ", "-")
 
    octokit.issues.createComment({
      owner: 'llvm',
      repo: 'temp-issue-tester',
      issue_number: issueID,
-     body: '@llvm/issue-testers'
+     body: teamname,
    })
-
 }
 
 run();
