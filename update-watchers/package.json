@@ -2,9 +2,9 @@
   "name": "update-watchers",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "dist/index.js",
   "scripts": {
-      "build": "ncc build main.js -o dist"
+      "build": "ncc build index.js -o dist"
   },
   "keywords": [],
   "author": "",

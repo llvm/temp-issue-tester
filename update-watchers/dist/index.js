@@ -34,7 +34,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(768);
+/******/ 		return __webpack_require__(12);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -43,15 +43,7 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ 381:
-/***/ (function() {
-
-eval("require")("@actions/core");
-
-
-/***/ }),
-
-/***/ 768:
+/***/ 12:
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
 const github = __webpack_require__(974);
@@ -73,6 +65,14 @@ async function run() {
 }
 
 run();
+
+
+/***/ }),
+
+/***/ 381:
+/***/ (function() {
+
+eval("require")("@actions/core");
 
 
 /***/ }),
