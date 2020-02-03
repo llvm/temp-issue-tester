@@ -4,11 +4,14 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-      "build": "ncc build index.js -o dist"
+    "build": "ncc build index.js -o dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@zeit/ncc": "^0.20.5"
+  },
   "dependencies": {
     "@actions/core": "^1.2.2",
     "@actions/github": "^2.1.0"
