@@ -5,10 +5,8 @@ async function run() {
   const token = core.getInput('token');
   const octokit = new github.GitHub(token);
 
-  console.log(github.context.issue)
-  console.log(github.context.payload)
   const issueID = github.context.issue.number;
-  const teamname = "@llvm/issue-subscribers-" + github.context.payload.label.name.replace(" ", "-")
+  const teamname = "@llvm/issue-subscribers-" + github.context.payload.label.name.replace(/ /g, "-")
 
    octokit.issues.createComment({
      owner: 'llvm',
