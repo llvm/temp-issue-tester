@@ -6,7 +6,8 @@ async function run() {
   const octokit = new github.GitHub(token);
 
   const issueID = github.context.issue.number;
-  const teamname = "@llvm/issue-subscribers-" + github.context.payload.label.name.replace(/ /g, "-")
+  // Need to put a space at the end for this to be considered a mention.
+  const teamname = "@llvm/issue-subscribers-" + github.context.payload.label.name.replace(/ /g, "-") + " "
 
    octokit.issues.createComment({
      owner: 'llvm',
