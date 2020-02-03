@@ -5,6 +5,7 @@ async function run() {
   const token = core.getInput('token');
   const octokit = new github.GitHub(token);
 
+  console.log(github.context.issue)
   const issueID = github.context.issue.number;
   const teamname = "@llvm/issue-subscribers-" + github.context.issue.label.replace(" ", "-")
 
