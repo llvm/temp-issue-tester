@@ -8,6 +8,7 @@ async function run() {
   const issueID = github.context.issue.number;
   const teamname = "issue-subscribers-" + github.context.payload.label.name.replace(/ /g, "-")
 
+  console.log(teamname)
   mentionList = ''
 
   // GitHub actions can't mention teams, because it's not a member of the
