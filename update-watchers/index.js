@@ -19,11 +19,14 @@ async function run() {
 
   octokit.paginate(userList).then(users => {
 
-  users.forEach(user => console.log(user.login) mentionList += '@' + user.login + ' ')
+  users.forEach(user => console.log(user.login))
+//    mentionList += '@' + user.login + ' '
+//  )
   // issues is an array of all issue objects
 });
 
 
+        /*
   if (mentionList != '') {
     octokit.issues.createComment({
       owner: 'llvm',
@@ -32,6 +35,7 @@ async function run() {
       body: mentionList,
     })
   }
+  */
 }
 
 run();
