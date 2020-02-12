@@ -11,3 +11,5 @@ jobs:
     steps:
     - name: Update watchers
       uses: llvm/temp-issue-tester/update-watchers@master
+      with:
+        token: secrets.ISSUE_MENTION_SECRET
