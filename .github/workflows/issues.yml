@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Update watchers
-      uses: llvm/temp-issue-tester/update-watchers@master
+      uses: llvm/temp-issue-tester/update-watchers@main
       with:
         token: ${{ secrets.ISSUE_MENTION_SECRET }}
