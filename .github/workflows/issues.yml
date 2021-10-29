@@ -12,6 +12,7 @@ jobs:
     - name: Update watchers
       uses: actions/github-script@v5
       with:
+        github-token: ${{ secrets.ISSUE_MENTION_SECRET }}
         script: |
             const teamname = "@llvm/issue-subscribers-" + context.payload.label.name.replace(/ /g, "-")
             github.rest.issues.createComment({
@@ -20,5 +21,3 @@ jobs:
               repo: context.repo.repo,
               body: teamname
             })
-      
-#token: ${{ secrets.ISSUE_MENTION_SECRET }}
