@@ -10,6 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Update watchers
-      uses: llvm/temp-issue-tester/update-watchers@main
+      uses: actions/github-script@v5
       with:
-        token: ${{ secrets.ISSUE_MENTION_SECRET }}
+        script: |
+            const teamname = "@llvm/issue-subscribers-" + context.payload.label.name.replace(/ /g, "-")
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: teamname
+            })
+      
+#token: ${{ secrets.ISSUE_MENTION_SECRET }}
