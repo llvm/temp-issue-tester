@@ -29,4 +29,6 @@ jobs:
                 repo: context.repo.repo,
                 body: comment
               });
-            } catch { }
+            } catch (e){
+              console.log(e);
+            }
