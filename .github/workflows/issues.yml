@@ -14,10 +14,17 @@ jobs:
       with:
         github-token: ${{ secrets.ISSUE_MENTION_SECRET }}
         script: |
-            const teamname = "@llvm/issue-subscribers-" + context.payload.label.name.replace(/ /g, "-")
+            const teamname = issue-subscribers-" + context.payload.label.name.replace(/ /g, "-")
+            const comment = "@llvm/" + teamname
+            
+            team = github.rest.teams.getByName({
+              org: context.repo.owner,
+              team_slug: teamname
+            })
+            
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: teamname
+              body: comment
             })
