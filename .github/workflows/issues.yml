@@ -14,7 +14,7 @@ jobs:
       with:
         github-token: ${{ secrets.ISSUE_MENTION_SECRET }}
         script: |
-            const teamname = "issue-subscribers-" + context.payload.label.name.replace(/ /g, "-");
+            const teamname = "issue-subscribers-" + context.payload.label.name.replace(/ /g, "-").replace(":","-");
             const comment = "@llvm/" + teamname;
             
             try {
