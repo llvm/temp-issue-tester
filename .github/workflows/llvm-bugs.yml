@@ -16,12 +16,14 @@ jobs:
       - run: npm install mailgun.js
       - name: Send notification
         uses: actions/github-script@v5
-        with:
+        env:
           apiKey: ${{ secrets.LLVM_BUGS_KEY }}
+        with:
           script: |
             const mailgun = require("mailgun-js");
             const DOMAIN = "email.llvm.org";
-            const mg = mailgun({apiKey: apiKey, domain: DOMAIN});
+            const {API_KEY} = process.env;
+            const mg = mailgun({apiKey: API_KEY, domain: DOMAIN});
 
             issue = await github.rest.issues.get({
               issue_number: context.issue.number,
