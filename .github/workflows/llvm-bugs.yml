@@ -37,9 +37,9 @@ jobs:
               console.log(issue);
             
               const payload = {
-                author: issue.user.login,
-                issue : issue.number,
-                title : issue.title
+                author: issue.data.user.login,
+                issue : issue.data.number,
+                title : issue.data.title
               };
             
               const data = {
@@ -52,5 +52,4 @@ jobs:
 
               return mailgun.messages.create(DOMAIN, data)
             })
-            .then(msg => console.log(msg))
-            .catch(err => console.log(err));
+            .then(msg => console.log(msg));
