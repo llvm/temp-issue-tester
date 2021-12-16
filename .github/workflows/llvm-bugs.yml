@@ -28,28 +28,29 @@ jobs:
 
             const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY});
 
-            issue = github.rest.issues.get({
+            github.rest.issues.get({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-            });
-
-            console.log(issue);
+            })
+            .then(function(issue) {
+              console.log(issue);
             
-            const payload = {
-              author: issue.user.login,
-              issue : issue.number,
-              title : issue.title
-            };
+              const payload = {
+                author: issue.user.login,
+                issue : issue.number,
+                title : issue.title
+              };
             
-            const data = {
-              from: "Mailgun Sandbox <postmaster@email.llvm.org>",
-              to: "anton.korobeynikov@llvm.org",
-              subject: "Hello",
-              template: "new-github-issue",
-              'h:X-Mailgun-Variables': JSON.stringify(payload)
-            };
+              const data = {
+                from: "Mailgun Sandbox <postmaster@email.llvm.org>",
+                to: "anton.korobeynikov@llvm.org",
+                subject: "Hello",
+                template: "new-github-issue",
+                'h:X-Mailgun-Variables': JSON.stringify(payload)
+              };
 
-            mailgun.messages.create(DOMAIN, data)
+              return mailgun.messages.create(DOMAIN, data)
+            })
             .then(msg => console.log(msg))
             .catch(err => console.log(err));
