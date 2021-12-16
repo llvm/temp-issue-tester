@@ -34,6 +34,8 @@ jobs:
               repo: context.repo.repo,
             });
 
+            console.log(issue);
+            
             const payload = {
               author: issue.user.login,
               issue : issue.number,
