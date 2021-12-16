@@ -35,11 +35,14 @@ jobs:
             })
             .then(function(issue) {
               console.log(issue);
-            
               const payload = {
-                author: issue.data.user.login,
-                issue : issue.data.number,
-                title : issue.data.title
+                author : issue.data.user.login,
+                issue  : issue.data.number,
+                title  : issue.data.title,
+                url    : issue.data.html_url,
+                labels : issue.data.labels,
+                assignee : issue.data.assignee,
+                body   : issue.data.body
               };
             
               const data = {
