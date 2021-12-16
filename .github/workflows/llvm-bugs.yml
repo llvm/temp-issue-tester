@@ -1,0 +1,44 @@
+name: LLVM Bugs notifier
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  auto-subscribe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: npm install mailgun.js
+      - name: Send notification
+        uses: actions/github-script@v5
+        with:
+          apiKey: ${{ secrets.LLVM_BUGS_KEY }}
+          script: |
+            const mailgun = require("mailgun-js");
+            const DOMAIN = "email.llvm.org";
+            const mg = mailgun({apiKey: apiKey, domain: DOMAIN});
+
+            issue = await github.rest.issues.get({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const data = {
+              from: "Mailgun Sandbox <postmaster@email.llvm.org>",
+              to: "anton.korobeynikov@llvm.org",
+              subject: "Hello",
+              template: "new-github-issue",
+              'h:X-Mailgun-Variables': { author: issue.user.login,
+                                         issue : issue.number,
+                                         title : issue.title}
+            };
+
+            mg.messages().send(data, function (error, body) {
+              console.log(body);
+            });
