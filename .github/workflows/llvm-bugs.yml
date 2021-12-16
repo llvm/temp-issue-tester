@@ -13,17 +13,20 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: npm install mailgun.js
+      - run: npm install mailgun.js form-data
       - name: Send notification
         uses: actions/github-script@v5
         env:
-          apiKey: ${{ secrets.LLVM_BUGS_KEY }}
+          MAILGUN_API_KEY: ${{ secrets.LLVM_BUGS_KEY }}
         with:
           script: |
-            const mailgun = require("mailgun-js");
+            const Mailgun = require("mailgun.js");
+            const formData = require('form-data');
+            const mailgun = new Mailgun(formData);
+
             const DOMAIN = "email.llvm.org";
-            const {API_KEY} = process.env;
-            const mg = mailgun({apiKey: API_KEY, domain: DOMAIN});
+
+            const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY});
 
             issue = await github.rest.issues.get({
               issue_number: context.issue.number,
@@ -31,16 +34,20 @@ jobs:
               repo: context.repo.repo,
             });
 
+            const payload = {
+              author: issue.user.login,
+              issue : issue.number,
+              title : issue.title
+            };
+            
             const data = {
               from: "Mailgun Sandbox <postmaster@email.llvm.org>",
               to: "anton.korobeynikov@llvm.org",
               subject: "Hello",
               template: "new-github-issue",
-              'h:X-Mailgun-Variables': { author: issue.user.login,
-                                         issue : issue.number,
-                                         title : issue.title}
+              'h:X-Mailgun-Variables': JSON.stringify(payload)
             };
 
-            mg.messages().send(data, function (error, body) {
-              console.log(body);
-            });
+            mailgun.messages.create(DOMAIN, data)
+            .then(msg => console.log(msg))
+            .catch(err => console.log(err));
