@@ -50,6 +50,6 @@ jobs:
                 'h:X-Mailgun-Variables': JSON.stringify(payload)
               };
 
-              return mailgun.messages.create(DOMAIN, data)
+              return mg.messages.create(DOMAIN, data)
             })
             .then(msg => console.log(msg));
