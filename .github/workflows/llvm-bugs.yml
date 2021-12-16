@@ -40,8 +40,8 @@ jobs:
                 issue  : issue.data.number,
                 title  : issue.data.title,
                 url    : issue.data.html_url,
-                labels : issue.data.labels,
-                assignee : issue.data.assignee,
+                labels : issue.data.labels.map(label => { return label.name }),
+                assignee : issue.data.assignees.map(assignee => { return assignee.login }),
                 body   : issue.data.body
               };
             
