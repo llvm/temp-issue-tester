@@ -48,7 +48,7 @@ jobs:
               const data = {
                 from: "Mailgun Sandbox <postmaster@email.llvm.org>",
                 to: "anton.korobeynikov@llvm.org",
-                subject: "Hello",
+                subject: `[Bug ${issue.data.number}] ${issue.data.title}`,
                 template: "new-github-issue",
                 'h:X-Mailgun-Variables': JSON.stringify(payload)
               };
