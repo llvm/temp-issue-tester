@@ -12,6 +12,7 @@ jobs:
     - name: Download Automation Script
       run:  curl -O -L https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/llvm/utils/git/github-automation.py
     - name: Update watchers
+      shell: python
       run: |
         ./github-automation.py \
           --token ${{ secrets.ISSUE_SUBSCRIBER_SECRET }} \
