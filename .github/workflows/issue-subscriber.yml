@@ -8,7 +8,6 @@ on:
 jobs:
   auto-subscribe:
     runs-on: ubuntu-latest
-    if: github.repository == 'llvm/llvm-project'
     steps:
     - name: Download Automation Script
       run:  curl -O -L https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/llvm/utils/git/github-automation.py
