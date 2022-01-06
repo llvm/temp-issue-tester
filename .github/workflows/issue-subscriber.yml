@@ -11,9 +11,9 @@ jobs:
     if: github.repository == 'llvm/llvm-project'
     steps:
     - name: Download Automation Script
-      shell:  curl -O -L https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/llvm/utils/git/github-automation.py
+      run:  curl -O -L https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/llvm/utils/git/github-automation.py
     - name: Update watchers
-      shell: |
+      run: |
         ./github-automation.py \
           --token ${{ secrets.ISSUE_SUBSCRIBER_SECRET }} \
           issue-subscriber \
