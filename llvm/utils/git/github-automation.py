@@ -45,7 +45,7 @@ parser.add_argument('--repo', type=str, default=get_default_repo())
 subparsers = parser.add_subparsers(dest='command')
 
 issue_subscriber_parser = subparsers.add_parser('issue-subscriber')
-issue_subscriber_parser.add_argument('--label-name', required=True)
+issue_subscriber_parser.add_argument('--label-name', type=str, required=True)
 issue_subscriber_parser.add_argument('--issue-number', type=int, required=True)
 
 args = parser.parse_args()

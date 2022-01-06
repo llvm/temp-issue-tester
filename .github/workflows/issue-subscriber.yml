@@ -18,7 +18,7 @@ jobs:
     - name: Update watchers
       run: |
         ./github-automation.py \
-          --token ${{ secrets.ISSUE_SUBSCRIBER_SECRET }} \
+          --token ${{ secrets.ISSUE_SUBSCRIBER_TOKEN }} \
           issue-subscriber \
           --issue-number ${{ github.event.issue.number }} \
           --label-name ${{ github.event.label.name }}
