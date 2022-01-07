@@ -12,15 +12,13 @@ import argparse
 import github
 import os
 
-
-
 class IssueSubscriber:
 
-    def __init__(self, args):
-        self.repo = github.Github(args.token).get_repo(args.repo)
-        self.org = github.Github(args.token).get_organization(self.repo.organization.login)
-        self.issue = self.repo.get_issue(args.issue_number)
-        self.team_name = 'issue-subscribers-{}'.format(args.label_name).lower()
+    def __init__(self, token:str, repo:str, issue_number:int, label_name:str):
+        self.repo = github.Github(token).get_repo(repo)
+        self.org = github.Github(token).get_organization(self.repo.organization.login)
+        self.issue = self.repo.get_issue(issue_number)
+        self.team_name = 'issue-subscribers-{}'.format(label_name).lower()
 
     def run(self):
         for team in self.org.get_teams():
@@ -32,16 +30,9 @@ class IssueSubscriber:
         return False
 
 
-def get_default_repo():
-    default = os.getenv('GITHUB_REPOSITORY')
-    if not default:
-        default = 'llvm/llvm-project'
-    return default
-
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--token', type=str, required=True)
-parser.add_argument('--repo', type=str, default=get_default_repo())
+parser.add_argument('--repo', type=str, default=os.getenv('GITHUB_REPOSITORY', 'llvm/llvm-project'))
 subparsers = parser.add_subparsers(dest='command')
 
 issue_subscriber_parser = subparsers.add_parser('issue-subscriber')
@@ -51,5 +42,5 @@ issue_subscriber_parser.add_argument('--issue-number', type=int, required=True)
 args = parser.parse_args()
 
 if args.command == 'issue-subscriber':
-    issue_subscriber = IssueSubscriber(args)
+    issue_subscriber = IssueSubscriber(args.token, args.repo, args.issue_number, args.label_name)
     issue_subscriber.run()
