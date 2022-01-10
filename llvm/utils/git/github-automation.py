@@ -14,13 +14,17 @@ import os
 
 class IssueSubscriber:
 
+    @property
+    def team_name(self) -> str:
+        return self._team_name
+
     def __init__(self, token:str, repo:str, issue_number:int, label_name:str):
         self.repo = github.Github(token).get_repo(repo)
         self.org = github.Github(token).get_organization(self.repo.organization.login)
         self.issue = self.repo.get_issue(issue_number)
-        self.team_name = 'issue-subscribers-{}'.format(label_name).lower()
+        self._team_name = 'issue-subscribers-{}'.format(label_name).lower()
 
-    def run(self):
+    def run(self) -> bool:
         for team in self.org.get_teams():
             if self.team_name != team.name.lower():
                 continue
