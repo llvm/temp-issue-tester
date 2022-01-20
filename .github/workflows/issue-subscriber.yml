@@ -21,7 +21,7 @@ jobs:
         LABEL_NAME: ${{ github.event.label.name }}
       run: |
         ./github-automation.py \
-          --token ${{ secrets.ISSUE_SUBSCRIBER_TOKEN }} \
+          --token '${{ secrets.ISSUE_SUBSCRIBER_TOKEN }}' \
           issue-subscriber \
-          --issue-number ${{ github.event.issue.number }} \
+          --issue-number '${{ github.event.issue.number }}' \
           --label-name "$LABEL_NAME"
