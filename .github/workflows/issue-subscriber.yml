@@ -8,6 +8,7 @@ on:
 jobs:
   auto-subscribe:
     runs-on: ubuntu-latest
+    if: !contains(github.event.label.name, '''')
     steps:
     - name: Setup Automation Script
       run:  |
@@ -18,7 +19,7 @@ jobs:
     - name: Update watchers
       run: |
         ./github-automation.py \
-          --token ${{ secrets.ISSUE_SUBSCRIBER_TOKEN }} \
+          --token '${{ secrets.ISSUE_SUBSCRIBER_TOKEN }}' \
           issue-subscriber \
-          --issue-number ${{ github.event.issue.number }} \
-          --label-name ${{ github.event.label.name }}
+          --issue-number '${{ github.event.issue.number }}' \
+          --label-name '${{ github.event.label.name }}'
