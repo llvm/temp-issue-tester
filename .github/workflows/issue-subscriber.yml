@@ -8,7 +8,7 @@ on:
 jobs:
   auto-subscribe:
     runs-on: ubuntu-latest
-    if: !contains(github.event.label.name, '''')
+    if: "!contains(github.event.label.name, '''')"
     steps:
     - name: Setup Automation Script
       run:  |
