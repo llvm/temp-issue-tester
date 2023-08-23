@@ -4,3 +4,5 @@
 * Run: npm install
 * Run: npm run-script build
 * Commit changes to index.js and dist/index.js
+
+  # TEMP CHANGE
