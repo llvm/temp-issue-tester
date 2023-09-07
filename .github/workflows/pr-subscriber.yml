@@ -1,0 +1,59 @@
+name: PR Subscriber
+
+on:
+  workflow_run:
+    workflows: ["Receive PR Label"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+jobs:
+  auto-subscribe:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    steps:
+      # From: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+      - name: 'Download artifact'
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+
+      - run: unzip pr.zip
+
+      - name: Setup Automation Script
+        run: |
+          curl -O -L https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/utils/git/github-automation.py
+          curl -O -L https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/utils/git/requirements.txt
+          chmod a+x github-automation.py
+          pip install -r requirements.txt
+
+      - name: Update watchers
+        # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+        run: |
+          PR_NUMBER=`cat pr/NR`
+          LABEL_NAME=`cat pr/LABEL`
+          ./github-automation.py \
+            --token '${{ secrets.ISSUE_SUBSCRIBER_TOKEN }}' \
+            pr-subscriber \
+            --issue-number "$PR_NUMBER" \
+            --label-name "$LABEL_NAME"
