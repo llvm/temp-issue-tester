@@ -6,7 +6,7 @@ on:
     types:
       - labeled
 
-permissons:
+permissions:
   contents: read
 
 jobs:
