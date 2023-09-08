@@ -51,8 +51,8 @@ jobs:
       - name: Update watchers
         # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
         run: |
-          PR_NUMBER=`cat pr/NR`
-          LABEL_NAME=`cat pr/LABEL`
+          PR_NUMBER=`cat NR`
+          LABEL_NAME=`cat LABEL`
           ./github-automation.py \
             --token '${{ secrets.ISSUE_SUBSCRIBER_TOKEN }}' \
             pr-subscriber \
