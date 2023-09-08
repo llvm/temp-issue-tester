@@ -19,7 +19,7 @@ jobs:
           echo ${{ github.event.number }} > ./pr/NR
           echo ${{ github.event.label.name }} > ./pr/LABEL
 
-      - uses: actions/upload-artifact:v3
+      - uses: actions/upload-artifact@v3
         with:
           name: pr
           path: pr/
