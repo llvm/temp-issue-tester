@@ -1,6 +1,6 @@
 # See https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
 
-Name: Receive PR Label
+name: PR Receive Label
 on:
   pull_request:
     types:
