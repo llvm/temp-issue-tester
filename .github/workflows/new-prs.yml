@@ -10,7 +10,6 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     if: >
-      github.repository == 'llvm/llvm-project' &&
       github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success'
     steps:
