@@ -52,4 +52,4 @@ jobs:
           # workaround for https://github.com/actions/labeler/issues/112
           sync-labels: ''
           repo-token: ${{ secrets.ISSUE_SUBSCRIBER_TOKEN }}
-          pr-numer: ${{steps.vars.outputs.pr-number}}
+          pr-number: ${{steps.vars.outputs.pr-number}}
