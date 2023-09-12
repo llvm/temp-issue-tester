@@ -43,8 +43,8 @@ jobs:
 
       - name: Setup Automation Script
         run: |
-          curl -O -L https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/utils/git/github-automation.py
-          curl -O -L https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/utils/git/requirements.txt
+          curl -O -L https://raw.githubusercontent.com/llvm/temp-issue-tester/.github/workflows/github-automation.py
+          curl -O -L https://raw.githubusercontent.com/llvm/temp-issue-tester/.github/workflows/requirements.txt
           chmod a+x github-automation.py
           pip install -r requirements.txt
 
