@@ -33,6 +33,7 @@ jobs:
         run: |
           import github
           import time
+          import os
 
           def needs_to_wait(repo):
               for status in ["in_progress", "queued"]:
@@ -44,7 +45,7 @@ jobs:
                           return True
               return False
 
-          token = sys.environ.get("GITHUB_TOKEN")
+          token = os.environ.get("GITHUB_TOKEN")
           repo = github.Github(token).get_repo("{{ github.repository }}")
           while needs_to_wait(repo):
               time.sleep(60)
