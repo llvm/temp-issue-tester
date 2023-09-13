@@ -1,6 +1,7 @@
 import github
 import os
 import sys
+import time
 
 def needs_to_wait(repo):
 
