@@ -29,7 +29,7 @@ jobs:
         # We can't use the concurrency tag for these jobs, because it will
         # cancel pending jobs if another job is running.
         env:
-          MYTOKEN: "{{ secrets.GITHUB_TOKEN }}"
+          MYTOKEN: {{ secrets.GITHUB_TOKEN }}
         run: |
           python3 pr-subscriber-wait.py "$MYTOKEN"
 
