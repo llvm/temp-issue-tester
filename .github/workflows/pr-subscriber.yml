@@ -40,9 +40,7 @@ jobs:
               workflow_name = os.environ.get("GITHUB_WORKFLOW")
               run_number = os.environ.get("GITHUB_RUN_NUMBER")
               for status in ["in_progress", "queued"]:
-                  print("Looking at jobs with status:", status)
                   for workflow in repo.get_workflow_runs(status = status):
-                      print("Looking at ", workflow.name, "run: ", workflow.run_number)
                       if workflow.name != workflow_name:
                           continue
                       if workflow.run_number < int(run_number):
