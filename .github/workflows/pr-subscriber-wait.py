@@ -17,6 +17,7 @@ def needs_to_wait(repo):
 
 repo_name = os.environ.get("GITHUB_REPOSITORY")
 token = sys.argv[1]
-repo = github.Github(token).get_repo(repo_name)
+gh = github.Github(token)
+repo = gh.get_repo(repo_name)
 while needs_to_wait(repo):
     time.sleep(60)
