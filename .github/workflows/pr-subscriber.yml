@@ -29,9 +29,9 @@ jobs:
         # We can't use the concurrency tag for these jobs, because it will
         # cancel pending jobs if another job is running.
         env:
-          GITHUB_TOKEN: "{{ secrets.ISSUE_SUBSCRIBER_TOKEN }}"
+          GITHUB_TOKEN: "{{ secrets.GITHUB_TOKEN }}"
         run: |
-          python3 pr-subscriber-wait.py '${{ github.token }}'
+          python3 pr-subscriber-wait.py "$GITHUB_TOKEN"
 
 
       # From: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
