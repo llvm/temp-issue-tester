@@ -31,7 +31,7 @@ jobs:
         env:
           GITHUB_TOKEN: "{{ secrets.ISSUE_SUBSCRIBER_TOKEN }}"
         run: |
-          python3 pr-subscriber-wait.py '${{ secrets.ISSUE_SUBSCRIBER_TOKEN }}'
+          python3 pr-subscriber-wait.py '${{ github.token }}'
 
 
       # From: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/

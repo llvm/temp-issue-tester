@@ -23,4 +23,4 @@ token = sys.argv[1]
 gh = github.Github(token)
 repo = gh.get_repo(repo_name)
 while needs_to_wait(repo):
-    time.sleep(60)
+    time.sleep(30)
