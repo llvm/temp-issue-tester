@@ -21,7 +21,8 @@ jobs:
         run: |
           curl -O -L https://raw.githubusercontent.com/llvm/temp-issue-tester/main/.github/workflows/github-automation.py
           curl -O -L https://raw.githubusercontent.com/llvm/temp-issue-tester/main/.github/workflows/requirements.txt
-          chmod a+x github-automation.py
+          curl -O -L https://raw.githubusercontent.com/llvm/temp-issue-tester/main/.github/workflows/pr-subscriber-wait.py
+          chmod a+x github-automation.py pr-subscriber-wait.py
           pip install -r requirements.txt
 
       - name: 'Wait for other actions'
@@ -29,26 +30,8 @@ jobs:
         # cancel pending jobs if another job is running.
         env:
           GITHUB_TOKEN: "{{ secrets.ISSUE_SUBSCRIBER_TOKEN }}"
-        shell: python
         run: |
-          import github
-          import time
-          import os
-
-          def needs_to_wait(repo):
-              for status in ["in_progress", "queued"]:
-                  for workflow in repo.get_workflow_runs(status = status):
-                      if workflow.name != "{{ github.workflow }}":
-                          continue
-                      if workflow.run_number < {{ github.run_number }}:
-                          print("Workflow {} still {} ".format(workflow.run_number, status))
-                          return True
-              return False
-
-          token = os.environ.get("GITHUB_TOKEN")
-          repo = github.Github(token).get_repo("{{ github.repository }}")
-          while needs_to_wait(repo):
-              time.sleep(60)
+          python3 pr-subscriber-wait.py "$GITHUB_TOKEN"
 
 
       # From: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
