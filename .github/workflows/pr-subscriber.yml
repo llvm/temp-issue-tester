@@ -27,9 +27,9 @@ jobs:
       - name: 'Wait for other actions'
         # We can't use the concurrency tag for these jobs, because it will
         # cancel pending jobs if another job is running.
-        shell: python
         env:
-          GITHUB_TOKEN: {{ github.token }}
+          GITHUB_TOKEN: "{{ github.token }}"
+        shell: python
         run: |
           import github
           import time
