@@ -21,18 +21,39 @@ jobs:
         run: |
           curl -O -L https://raw.githubusercontent.com/llvm/temp-issue-tester/main/.github/workflows/github-automation.py
           curl -O -L https://raw.githubusercontent.com/llvm/temp-issue-tester/main/.github/workflows/requirements.txt
-          curl -O -L https://raw.githubusercontent.com/llvm/temp-issue-tester/main/.github/workflows/pr-subscriber-wait.py
-          chmod a+x github-automation.py pr-subscriber-wait.py
+          chmod a+x github-automation.py
           pip install -r requirements.txt
 
       - name: 'Wait for other actions'
         # We can't use the concurrency tag for these jobs, because it will
         # cancel pending jobs if another job is running.
+        shell: python
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python3 pr-subscriber-wait.py
+          import github
+          import os
+          import sys
+          import time
 
+          def needs_to_wait(repo):
+              workflow_name = os.environ.get("GITHUB_WORKFLOW")
+              run_number = os.environ.get("GITHUB_RUN_NUMBER")
+              for status in ["in_progress", "queued"]:
+                  for workflow in repo.get_workflow_runs(status = status):
+                      if workflow.name != workflow_name:
+                          continue
+                      if workflow.run_number < int(run_number):
+                          print("Workflow {} still {} ".format(workflow.run_number, status))
+                          return True
+              return False
+
+          repo_name = os.environ.get("GITHUB_REPOSITORY")
+          token = os.environ.get("GITHUB_TOKEN")
+          gh = github.Github(token)
+          repo = gh.get_repo(repo_name)
+          while needs_to_wait(repo):
+              time.sleep(30)
 
       # From: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
       # Updated version here: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#using-data-from-the-triggering-workflow
