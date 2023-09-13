@@ -28,6 +28,8 @@ jobs:
         # We can't use the concurrency tag for these jobs, because it will
         # cancel pending jobs if another job is running.
         shell: python
+        env:
+          GITHUB_TOKEN: {{ github.token }}
         run: |
           import github
           import time
@@ -42,7 +44,8 @@ jobs:
                           return True
               return False
 
-          repo = github.Github("{{ github.token }}").get_repo("{{ github.repository }}")
+          token = sys.environ.get("GITHUB_TOKEN")
+          repo = github.Github(token).get_repo("{{ github.repository }}")
           while needs_to_wait(repo):
               time.sleep(60)
 
