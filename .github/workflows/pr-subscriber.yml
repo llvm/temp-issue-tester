@@ -16,6 +16,29 @@ jobs:
       github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success'
     steps:
+      - name: 'Wait for other actions'
+        # We can't use the concurrency tag for these jobs, because it will
+        # cancel pending jobs if another job is running.
+        shell: python
+        run: |
+          import github
+          import time
+
+          def needs_to_wait(repo):
+              for status in ["in_progress", "queued"]:
+                  for workflow in repo.get_workflow_runs(status = status):
+                      if workflow.name != "{{ github.workflow }}":
+                          continue
+                      if workflow.run_number < {{ github.run_number }}:
+                          print("Workflow {} still {} ".format(workflow.run_number, status))
+                          return True
+              return False
+
+          repo = github.Github("{{ github.token }}")
+          while needs_to_wait(repo):
+              time.sleep(60)
+
+
       # From: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
       # Updated version here: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#using-data-from-the-triggering-workflow
       - name: 'Download artifact'
