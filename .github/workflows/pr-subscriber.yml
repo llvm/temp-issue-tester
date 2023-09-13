@@ -28,7 +28,7 @@ jobs:
         # We can't use the concurrency tag for these jobs, because it will
         # cancel pending jobs if another job is running.
         env:
-          GITHUB_TOKEN: "{{ github.token }}"
+          GITHUB_TOKEN: "{{ secrets.ISSUE_SUBSCRIBER_TOKEN }}"
         shell: python
         run: |
           import github
