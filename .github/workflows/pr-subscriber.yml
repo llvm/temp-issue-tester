@@ -41,7 +41,7 @@ jobs:
                           return True
               return False
 
-          repo = github.Github("{{ github.token }}")
+          repo = github.Github("{{ github.token }}").get_repo("{{ github.repository }}")
           while needs_to_wait(repo):
               time.sleep(60)
 
