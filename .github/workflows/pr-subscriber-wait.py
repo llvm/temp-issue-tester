@@ -12,7 +12,7 @@ def needs_to_wait(repo):
             print("Looking at ", workflow.name, "#", workflow.run_number)
             if workflow.name != workflow_name:
                 continue
-            if workflow.run_number < run_number:
+            if workflow.run_number < int(run_number):
                 print("Workflow {} still {} ".format(workflow.run_number, status))
                 return True
     return False
