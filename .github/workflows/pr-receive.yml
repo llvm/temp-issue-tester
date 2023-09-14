@@ -10,7 +10,7 @@ permissions:
 jobs:
   pr-target:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.commits < 10
+    if: github.event.pull_request.commits < 5
     steps:
       - name: Store PR Information
         run: |
