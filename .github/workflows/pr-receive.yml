@@ -11,7 +11,7 @@ jobs:
   pr-target:
     runs-on: ubuntu-latest
     if: github.repository == 'llvm/llvm-project' &&
-        github.event.pull_request.commits < 4
+        github.event.pull_request.commits < 10
     steps:
       - name: Store PR Information
         run: |
