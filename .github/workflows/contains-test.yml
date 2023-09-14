@@ -1,0 +1,23 @@
+name: Contians Test
+
+permissions:
+  contents: read
+
+on:
+  issue_comment:
+    types:
+      - created
+      - edited
+  issues:
+    types:
+      - opened
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    if: contains(github.event.action == 'opened' && github.event.issue.body || github.event.comment.body, '/cherry-pick')
+    steps:
+      - name: Echo comment
+        run: |
+          echo "${{  github.event.issue.body || github.event.comment.body }}"
