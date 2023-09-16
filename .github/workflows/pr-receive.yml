@@ -3,6 +3,9 @@
 name: PR Receive
 on:
   pull_request_target:
+  pull_request:
+    types:
+      - ready_for_review
 
 permissions:
   contents: read
@@ -10,7 +13,13 @@ permissions:
 jobs:
   pr-target:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.commits < 5
+    # Ignore PRs with more than 10 commits.  Pull requests with a lot of
+    # commits tend to be accidents usually when someone made a mistake while trying
+    # to rebase.  We want to ignore these pull requests to avoid excessive
+    # notifications.
+    if: > 
+        github.event.pull_request.draft == false &&
+        github.event.pull_request.commits < 10
     steps:
       - name: Store PR Information
         run: |
