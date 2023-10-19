@@ -29,4 +29,4 @@ jobs:
           configuration-path: .github/new-prs-labeler.yml
           # workaround for https://github.com/actions/labeler/issues/112
           sync-labels: ''
-          repo-token: ${{ secrets.ISSUE_SUBSCRIBER_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
