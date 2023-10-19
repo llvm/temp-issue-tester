@@ -20,6 +20,7 @@ jobs:
     # commits tend to be accidents usually when someone made a mistake while trying
     # to rebase.  We want to ignore these pull requests to avoid excessive
     # notifications.
+    if: >
         github.event.pull_request.draft == false &&
         github.event.pull_request.commits < 10
     steps:
