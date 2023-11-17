@@ -1,0 +1,19 @@
+name: "Required workflow not"
+on:
+  pull_request:
+    paths:
+      - !llvm/**
+
+permissions:
+  contents: read
+
+jobs:
+  required-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require
+        run: true
+
+# Add a comment
+# Add a comment
+# Add a comment
