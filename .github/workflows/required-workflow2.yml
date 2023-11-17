@@ -2,7 +2,7 @@ name: "Required workflow not"
 on:
   pull_request:
     paths:
-      - !llvm/**
+      - '!llvm/**'
 
 permissions:
   contents: read
