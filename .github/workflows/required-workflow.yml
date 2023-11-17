@@ -1,6 +1,8 @@
 name: "Required workflow"
 on:
   pull_request:
+    paths:
+      - llvm/**
 
 permissions:
   contents: read
