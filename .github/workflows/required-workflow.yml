@@ -1,0 +1,13 @@
+name: "Required workflow"
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  required-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require
+        run: false
