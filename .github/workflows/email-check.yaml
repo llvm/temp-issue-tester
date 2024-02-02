@@ -20,7 +20,7 @@ jobs:
           echo "EMAIL=$(git show -s --format='%ae' HEAD~0)" >> $GITHUB_OUTPUT
 
       - name: Validate author email
-        if: ${{ !endsWith(steps.author.outputs.EMAIL, 'noreply.github.com')  }}
+        if: ${{ endsWith(steps.author.outputs.EMAIL, 'noreply.github.com')  }}
         uses: actions/github-script@v6
         env:
           EMAIL: ${{ steps.author.outputs.EMAIL }}
