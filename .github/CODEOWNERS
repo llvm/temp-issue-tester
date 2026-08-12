@@ -1,1 +1,3 @@
-
+# Notification experiment for RFC (reviewers-test team ownership)
+# Scopes ownership to the notif-test/ dir only, to avoid affecting anything else.
+/notif-test/ @llvm/reviewers-test
