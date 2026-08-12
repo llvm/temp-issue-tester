@@ -1,6 +1,6 @@
 # Notification experiment for RFC (reviewers-test team ownership)
 # Catch-all: broad reviewers team + soaker (@rnk-llvm-test) to absorb notifications.
 * @llvm/reviewers-test @rnk-llvm-test
-# Area rule: a subteam (subset of reviewers-test) owns /subarea/, to test that
-# last-match-wins routes owned-area PRs to local owners only, never the wide team.
-/subarea/ @llvm/reviewers-test-subteam
+# Area rule with BOTH the local subteam AND the broad reviewers team, to test
+# whether the subteam request soaks the broad team's notification.
+/subarea/ @llvm/reviewers-test-subteam @llvm/reviewers-test
